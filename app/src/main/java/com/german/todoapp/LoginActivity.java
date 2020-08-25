@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btnLogin.setOnClickListener(this);
 
-        // clases anonimas
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,11 +41,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view == btnLogin) {
-            String email = etEmail.getText().toString();
-            String password = etPassword.getText().toString();
-            // validaciones al email y al password
-            startMainActivity(email, password);
+            startLoginFlow();
         }
+    }
+
+    private void startLoginFlow() {
+        String email = etEmail.getText().toString();
+        String password = etPassword.getText().toString();
+        if (notValidInput(email, password)) {
+            Toast.makeText(this, "Las credenciales no son válidas!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        startMainActivity(email, password);
+    }
+
+    private boolean notValidInput(String email, String password) {
+        return email.isEmpty() || password.isEmpty() || !email.contains("@") || password.length() < Constants.MIN_PASSWORD_LENGTH;
     }
 
     private void startMainActivity(String email, String password) {
