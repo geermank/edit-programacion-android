@@ -9,25 +9,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/welcome_message"
+        android:textSize="24sp"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"/>
+        android:padding="16dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correo electrónico"/>
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Constraseña"/>
+        android:hint="Constraseña"
+        android:inputType="textPassword"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar sesión"/>
+        android:text="Iniciar sesión"
+        android:layout_marginHorizontal="16dp"/>
 
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Olvide mi contraseña"
+        android:textSize="24sp"
+        android:layout_margin="16dp"/>
+
+    <!--
+    LinearLayout con peso 3, distribuido en 3 partes iguales
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Boton 1"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Boton 2"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Boton 3"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    -->
 </LinearLayout>
