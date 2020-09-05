@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--
     <TextView
         android:id="@+id/tv_hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
         android:textSize="24sp"/>
+    -->
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/main_toolbar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tasks"

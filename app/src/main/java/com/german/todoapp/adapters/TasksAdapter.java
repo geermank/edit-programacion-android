@@ -16,9 +16,14 @@ import java.util.List;
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
 
     private List<Task> tasks;
+    private OnItemClickListener listener;
 
     public TasksAdapter(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -50,9 +55,17 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             assignedTo = itemView.findViewById(R.id.tv_assigned_to);
         }
 
-        public void bind(Task task) {
+        public void bind(final Task task) {
             title.setText(task.getTitle());
             assignedTo.setText(task.getAssignedTo());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(task);
+                    }
+                }
+            });
         }
     }
 }
