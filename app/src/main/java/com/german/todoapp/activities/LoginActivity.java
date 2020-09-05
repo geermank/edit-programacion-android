@@ -1,4 +1,4 @@
-package com.german.todoapp;
+package com.german.todoapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.german.todoapp.Constants;
+import com.german.todoapp.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

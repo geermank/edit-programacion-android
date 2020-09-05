@@ -1,8 +1,10 @@
-package com.german.todoapp;
+package com.german.todoapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.german.todoapp.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 
