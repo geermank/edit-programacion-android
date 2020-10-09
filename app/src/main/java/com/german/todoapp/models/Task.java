@@ -1,7 +1,13 @@
 package com.german.todoapp.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "tasks")
 public class Task {
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String title;
     private String description;
     private boolean finished;
@@ -14,6 +20,14 @@ public class Task {
         this.description = description;
         this.finished = finished;
         this.assignedTo = assignedTo;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {

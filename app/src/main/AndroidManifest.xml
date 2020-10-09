@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".AddTaskActivity"/>
+        <activity android:name=".activities.AddTaskActivity"/>
 
         <activity android:name=".activities.ScrollActivity" />
         <activity android:name=".activities.UserProfileActivity" />

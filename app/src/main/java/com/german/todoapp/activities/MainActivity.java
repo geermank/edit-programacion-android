@@ -1,31 +1,31 @@
 package com.german.todoapp.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.german.todoapp.AddTaskActivity;
+import com.german.todoapp.Constants;
 import com.german.todoapp.R;
 import com.german.todoapp.adapters.OnItemClickListener;
 import com.german.todoapp.adapters.TasksAdapter;
+import com.german.todoapp.database.LocalDatabase;
 import com.german.todoapp.models.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener {
+
+    private List<Task> tasks;
+    private TasksAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,16 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         String helloMessage = getString(R.string.welcome_message);
         message.setText(helloMessage);
         message.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));*/
+        tasks = new ArrayList<>();
         toolbarSetUp();
         tasksListSetUp();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateTasks();
+        adapter.notifyDataSetChanged();
     }
 
     private void toolbarSetUp() {
@@ -60,9 +68,20 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         if (item.getItemId() == R.id.action_add_task) {
             startActivity(new Intent(this, AddTaskActivity.class));
         } else if (item.getItemId() == R.id.action_logout) {
-            Toast.makeText(this, "Cerrar sesión", Toast.LENGTH_SHORT).show();
+            logout();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        if (preferences.contains(Constants.USER_EMAIL) && preferences.contains(Constants.USER_PASSWORD)) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.apply();
+        }
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override
@@ -75,31 +94,16 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         RecyclerView rvTasks = findViewById(R.id.rv_tasks);
         rvTasks.setLayoutManager(new LinearLayoutManager(this));
 
-        List<Task> tasks = createTasks();
-        TasksAdapter adapter = new TasksAdapter(tasks);
+        updateTasks();
+        adapter = new TasksAdapter(tasks);
         adapter.setOnItemClickListener(this);
 
         rvTasks.setAdapter(adapter);
     }
 
-    private List<Task> createTasks() {
-        Task t1 = new Task();
-        t1.setTitle("Pasear al perro");
-        t1.setAssignedTo("German");
-
-        Task t2 = new Task();
-        t2.setTitle("Lavar la rop");
-        t2.setAssignedTo("German");
-
-        Task t3 = new Task();
-        t3.setTitle("Ir al supermercado");
-        t3.setAssignedTo("Mi abuela");
-
-        List<Task> tasks = new ArrayList<>();
-        tasks.add(t1);
-        tasks.add(t2);
-        tasks.add(t3);
-
-        return tasks;
+    private void updateTasks() {
+        List<Task> tasksFromDatabase = LocalDatabase.getInstance(this).getTasksDao().getAll();
+        tasks.clear();
+        tasks.addAll(tasksFromDatabase);
     }
 }
